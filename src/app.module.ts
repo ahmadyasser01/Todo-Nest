@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TodoModule } from './todo/todo.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { User } from './user/entites/user.entity';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { AuthModule } from './auth/auth.module';
       username: process.env.POSTGRES_USER || 'postgres',
       password: process.env.POSTGRES_PASSWORD || '123456789',
       database: process.env.POSTGRES_DB || 'tododb',
-      entities: [],
+      entities: [User],
       synchronize: true,
     }),
     TodoModule,
