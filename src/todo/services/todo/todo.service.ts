@@ -19,4 +19,9 @@ export class TodoService {
       where: { user: { id: userId } },
     });
   }
+  async getTodo(todoId: number, userId: any) {
+    return this.todoRepository.findOne({
+      where: { id: todoId, user: { id: userId } },
+    });
+  }
 }

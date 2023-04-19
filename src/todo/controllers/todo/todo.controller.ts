@@ -5,6 +5,7 @@ import {
   Request,
   UseGuards,
   Get,
+  Param,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
@@ -30,5 +31,12 @@ export class TodoController {
   getTodos(@Request() req: any) {
     console.log('passed user id', req.user);
     return this.todoService.getTodos(req.user.userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  getTodo(@Param('id') id: number, @Request() req: any) {
+    console.log('passed user id', req.user);
+    return this.todoService.getTodo(id, req.user.userId);
   }
 }

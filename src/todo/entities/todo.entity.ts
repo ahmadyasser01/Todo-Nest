@@ -5,7 +5,7 @@ import { User } from 'src/user/entites/user.entity';
 @Entity()
 export class Todo {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column()
   title: string;
