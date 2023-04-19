@@ -14,4 +14,9 @@ export class TodoService {
     const todo = this.todoRepository.create({ ...taskData, user: userId });
     return await this.todoRepository.save(todo);
   }
+  async getTodos(userId: any) {
+    return this.todoRepository.find({
+      where: { user: { id: userId } },
+    });
+  }
 }
