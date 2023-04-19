@@ -24,4 +24,16 @@ export class TodoService {
       where: { id: todoId, user: { id: userId } },
     });
   }
+
+  async updateTodo(todoId: number, userId: any, updates: any) {
+    return this.todoRepository
+      .createQueryBuilder()
+      .update(Todo)
+      .set(updates)
+      .where({
+        id: todoId,
+        user: userId,
+      })
+      .execute();
+  }
 }
