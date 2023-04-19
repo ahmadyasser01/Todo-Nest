@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entites/user.entity';
 import { UserService } from 'src/user/user.service';
@@ -9,6 +10,7 @@ export class AuthService {
   public constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
     private readonly userService: UserService,
+    private jwtService: JwtService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<User | null> {
@@ -16,5 +18,13 @@ export class AuthService {
     console.log(user, 'got user');
     if (user) return user;
     return null;
+  }
+  //FIXME: FIX type
+  async login(user: any) {
+    const payload = { email: user.email, sub: user.id };
+    return {
+      user,
+      access_token: await this.jwtService.signAsync(payload),
+    };
   }
 }
