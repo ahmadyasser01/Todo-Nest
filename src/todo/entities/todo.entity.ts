@@ -11,10 +11,10 @@ export class Todo {
   title: string;
 
   @Column({ nullable: true })
-  description: TODO_STATUS;
+  description: string;
 
-  @Column()
-  status: string;
+  @Column({ type: 'enum', enum: TODO_STATUS })
+  status: TODO_STATUS;
 
   @ManyToOne(() => User, (user) => user.todos)
   user: User;
