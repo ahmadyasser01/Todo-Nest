@@ -36,4 +36,16 @@ export class TodoService {
       })
       .execute();
   }
+
+  async deleteTodo(todoId: number, userId: any) {
+    return this.todoRepository
+      .createQueryBuilder()
+      .delete()
+      .from(Todo)
+      .where({
+        id: todoId,
+        user: userId,
+      })
+      .execute();
+  }
 }

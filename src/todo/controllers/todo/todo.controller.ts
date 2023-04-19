@@ -7,6 +7,7 @@ import {
   Get,
   Param,
   Patch,
+  Delete,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
@@ -50,5 +51,11 @@ export class TodoController {
   ) {
     console.log('passed user id', req.user);
     return this.todoService.updateTodo(id, req.user.userId, updates);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  deleteTodo(@Param('id') id: number, @Request() req: any) {
+    return this.todoService.deleteTodo(id, req.user.userId);
   }
 }
