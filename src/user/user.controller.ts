@@ -7,18 +7,28 @@ import {
   Post,
   Request,
   UseGuards,
+  ClassSerializerInterceptor,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { AuthService } from 'src/auth/services/auth.service';
 
 @Controller('users')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private authService: AuthService,
+  ) {}
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Post('')
-  createUser(@Body() createUserDto: CreateUserDto) {
+  async createUser(@Body() createUserDto: CreateUserDto) {
+    createUserDto.password = await this.authService.hashPassword(
+      createUserDto.password,
+    );
     return this.userService.createUser(createUserDto);
   }
 

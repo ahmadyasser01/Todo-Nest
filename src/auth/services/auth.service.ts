@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entites/user.entity';
 import { UserService } from 'src/user/user.service';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -26,5 +27,11 @@ export class AuthService {
       user,
       access_token: await this.jwtService.signAsync(payload),
     };
+  }
+
+  async hashPassword(password: string): Promise<string> {
+    const saltOrRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltOrRounds);
+    return hashedPassword;
   }
 }
