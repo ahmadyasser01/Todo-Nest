@@ -15,9 +15,11 @@ export class TodoService {
     const todo = this.todoRepository.create({ ...taskData, user: userId });
     return await this.todoRepository.save(todo);
   }
-  async getTodos(userId: any) {
+  async getTodos(userId: any, { page = 1, limit = 10 } = {}) {
     return this.todoRepository.find({
       where: { user: { id: userId } },
+      skip: (page - 1) * limit,
+      take: limit,
     });
   }
   async getTodo(todoId: number, userId: any) {

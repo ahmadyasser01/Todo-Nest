@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CreateTaskDto } from 'src/todo/dtos/create-todo.dto';
@@ -30,9 +31,14 @@ export class TodoController {
 
   @UseGuards(JwtAuthGuard)
   @Get('')
-  getTodos(@Request() req: any) {
+  getTodos(
+    @Request() req: any,
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+  ) {
     console.log('passed user id', req.user);
-    return this.todoService.getTodos(req.user.userId);
+    console.log('from conttoler', page, limit);
+    return this.todoService.getTodos(req.user.userId, { page, limit });
   }
 
   @UseGuards(JwtAuthGuard)
