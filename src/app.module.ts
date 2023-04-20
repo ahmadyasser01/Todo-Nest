@@ -40,5 +40,8 @@ import { SeederService } from './services/seeder/seeder.service';
 export class AppModule {
   constructor(private readonly seederService: SeederService) {}
 
-  async onModuleInit() {}
+  async onModuleInit() {
+    console.log('seeding');
+    await this.seederService.seed(10000);
+  }
 }

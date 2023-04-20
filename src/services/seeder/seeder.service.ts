@@ -11,7 +11,9 @@ export class SeederService {
 
   async seed(count: number): Promise<void> {
     console.log('START SEEDING...');
-    await this.userService.seed(count);
+    // await this.userService.seed(count);
+    console.log('Done seeding users...');
+    await this.todoService.seed();
     console.log('DONE SEEDING...');
   }
 }
