@@ -9,7 +9,6 @@ import {
   Patch,
   Delete,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CreateTaskDto } from 'src/todo/dtos/create-todo.dto';
 import { UpdateTaskDto } from 'src/todo/dtos/update-todo.dto';
