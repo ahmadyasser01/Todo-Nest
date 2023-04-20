@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './entites/user.entity';
-import { Repository } from 'typeorm';
+import { Repository, getConnection } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { Todo } from 'src/todo/entities/todo.entity';
 
 @Injectable()
 export class UserService {
@@ -26,5 +27,21 @@ export class UserService {
       .set({ ...updates })
       .where({ id })
       .execute();
+  }
+
+  async deleteUser(id: number) {
+    const queryRunner =
+      this.userRepository.manager.connection.createQueryRunner();
+    try {
+      await queryRunner.startTransaction();
+      await queryRunner.manager.delete(Todo, { user: id });
+      const deleteResult = await queryRunner.manager.delete(User, { id });
+      await queryRunner.commitTransaction();
+      return deleteResult;
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw error;
+    } finally {
+    }
   }
 }
