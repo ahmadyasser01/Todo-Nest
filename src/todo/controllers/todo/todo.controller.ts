@@ -12,6 +12,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CreateTaskDto } from 'src/todo/dtos/create-todo.dto';
+import { UpdateTaskDto } from 'src/todo/dtos/update-todo.dto';
 import { TodoService } from 'src/todo/services/todo/todo.service';
 
 @Controller('todos')
@@ -47,7 +48,7 @@ export class TodoController {
   updateTodo(
     @Param('id') id: number,
     @Request() req: any,
-    @Body() updates: any,
+    @Body() updates: UpdateTaskDto,
   ) {
     console.log('passed user id', req.user);
     return this.todoService.updateTodo(id, req.user.userId, updates);

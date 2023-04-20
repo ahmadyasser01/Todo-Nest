@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateTaskDto } from 'src/todo/dtos/create-todo.dto';
+import { UpdateTaskDto } from 'src/todo/dtos/update-todo.dto';
 import { Todo } from 'src/todo/entities/todo.entity';
 import { Repository } from 'typeorm';
 
@@ -25,7 +26,7 @@ export class TodoService {
     });
   }
 
-  async updateTodo(todoId: number, userId: any, updates: any) {
+  async updateTodo(todoId: number, userId: any, updates: UpdateTaskDto) {
     return this.todoRepository
       .createQueryBuilder()
       .update(Todo)
