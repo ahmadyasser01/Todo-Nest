@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, BadRequestException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entites/user.entity';
@@ -17,8 +17,12 @@ export class AuthService {
   async validateUser(email: string, password: string): Promise<User | null> {
     const user = await this.userService.findByEmail(email);
     console.log(user, 'got user');
-    if (user) return user;
-    return null;
+
+    if (!user) return null;
+    const isMatch = await this.comparePasswords(password, user.password);
+    console.log(isMatch);
+    if (!isMatch) throw new BadRequestException('Invalid email or password');
+    return user;
   }
   //FIXME: FIX type
   async login(user: any) {
@@ -33,5 +37,13 @@ export class AuthService {
     const saltOrRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltOrRounds);
     return hashedPassword;
+  }
+
+  async comparePasswords(
+    password: string,
+    hashedPassword: string,
+  ): Promise<boolean> {
+    const isMatch = await bcrypt.compare(password, hashedPassword);
+    return isMatch;
   }
 }
