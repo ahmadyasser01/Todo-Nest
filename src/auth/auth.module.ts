@@ -9,6 +9,7 @@ import { PassportModule } from '@nestjs/passport';
 import { AuthController } from './controllers/auth/auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
+import { UserService } from 'src/user/user.service';
 
 @Module({
   imports: [

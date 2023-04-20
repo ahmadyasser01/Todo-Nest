@@ -5,6 +5,7 @@ import { User } from './entites/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Todo } from 'src/todo/entities/todo.entity';
 import { AuthModule } from '../auth/auth.module';
+import { AuthService } from 'src/auth/services/auth.service';
 
 @Module({
   imports: [

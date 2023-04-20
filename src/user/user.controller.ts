@@ -9,6 +9,8 @@ import {
   UseGuards,
   ClassSerializerInterceptor,
   UseInterceptors,
+  forwardRef,
+  Inject,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
@@ -20,6 +22,7 @@ import { AuthService } from 'src/auth/services/auth.service';
 export class UserController {
   constructor(
     private userService: UserService,
+    @Inject(forwardRef(() => AuthService))
     private authService: AuthService,
   ) {}
 

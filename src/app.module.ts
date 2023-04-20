@@ -9,6 +9,7 @@ import { User } from './user/entites/user.entity';
 import { Todo } from './todo/entities/todo.entity';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggingInterceptor } from './logging/logging.interceptor';
+import { SeederService } from './services/seeder/seeder.service';
 
 @Module({
   imports: [
@@ -33,6 +34,11 @@ import { LoggingInterceptor } from './logging/logging.interceptor';
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor,
     },
+    SeederService,
   ],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private readonly seederService: SeederService) {}
+
+  async onModuleInit() {}
+}

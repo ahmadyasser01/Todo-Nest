@@ -1,20 +1,43 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { User } from './entites/user.entity';
-import { Repository, getConnection } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { Todo } from 'src/todo/entities/todo.entity';
 import { CreateUserDto } from './dtos/create-user.dto';
+import * as faker from 'faker';
+import { AuthService } from 'src/auth/services/auth.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
+    @Inject(forwardRef(() => AuthService))
+    private readonly authService: AuthService,
   ) {}
 
   createUser(userData: CreateUserDto) {
     const newUser = this.userRepository.create(userData);
     return this.userRepository.save(newUser);
+  }
+  async seed(count: number) {
+    const users = [];
+    const password = await this.authService.hashPassword('123456789');
+
+    for (let i = 0; i < count; i++) {
+      users.push({
+        name: faker.name.findName(),
+        email: `test${i}@test.com`,
+        password: password,
+      });
+    }
+    console.log(users[50]);
+    return this.userRepository
+      .createQueryBuilder()
+      .insert()
+      .into(User)
+      .values(users)
+      .execute();
   }
   async findByEmail(email: string): Promise<User | undefined> {
     console.log('test finding');
