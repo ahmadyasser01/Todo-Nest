@@ -9,6 +9,8 @@ import {
   Patch,
   Delete,
   Query,
+  BadRequestException,
+  NotFoundException,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CreateTaskDto } from 'src/todo/dtos/create-todo.dto';
@@ -43,25 +45,38 @@ export class TodoController {
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  getTodo(@Param('id') id: number, @Request() req: any) {
-    console.log('passed user id', req.user);
-    return this.todoService.getTodo(id, req.user.userId);
+  async getTodo(@Param('id') id: number, @Request() req: any) {
+    const todo = await this.todoService.getTodo(id, req.user.userId);
+    if (!todo) return new NotFoundException();
+    return todo;
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  updateTodo(
+  async updateTodo(
     @Param('id') id: number,
     @Request() req: any,
     @Body() updates: UpdateTaskDto,
   ) {
-    console.log('passed user id', req.user);
-    return this.todoService.updateTodo(id, req.user.userId, updates);
+    const updatedTodo = await this.todoService.updateTodo(
+      id,
+      req.user.userId,
+      updates,
+    );
+    if (updatedTodo.affected) {
+      return updatedTodo.raw[0];
+    }
+    return new BadRequestException();
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  deleteTodo(@Param('id') id: number, @Request() req: any) {
-    return this.todoService.deleteTodo(id, req.user.userId);
+  async deleteTodo(@Param('id') id: number, @Request() req: any) {
+    const deletedTodo = await this.todoService.deleteTodo(id, req.user.userId);
+
+    if (deletedTodo.affected) {
+      return;
+    }
+    return new BadRequestException();
   }
 }

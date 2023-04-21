@@ -21,7 +21,7 @@ export class AuthService {
 
   async validateUser(email: string, password: string): Promise<User | null> {
     const user = await this.userService.findByEmail(email);
-    if (!user) return null;
+    if (!user) throw new BadRequestException('Invalid email or password');
     const isMatch = await this.comparePasswords(password, user.password);
     console.log(isMatch);
     if (!isMatch) throw new BadRequestException('Invalid email or password');

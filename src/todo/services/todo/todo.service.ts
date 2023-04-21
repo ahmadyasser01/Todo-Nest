@@ -64,6 +64,7 @@ export class TodoService {
         id: todoId,
         user: userId,
       })
+      .returning('*')
       .execute();
   }
 

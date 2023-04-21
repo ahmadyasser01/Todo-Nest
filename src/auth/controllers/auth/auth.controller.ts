@@ -5,6 +5,8 @@ import {
   UseGuards,
   ClassSerializerInterceptor,
   UseInterceptors,
+  NotFoundException,
+  BadRequestException,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request as ExpressReq } from 'express';
@@ -18,6 +20,8 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   @Post('login')
   async login(@Request() req: ExpressReq) {
-    return this.authService.login(req.user);
+    const user = await this.authService.login(req.user);
+    if (!user) return new BadRequestException('Invalid Email or Password ');
+    return user;
   }
 }

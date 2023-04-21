@@ -54,6 +54,7 @@ export class UserService {
       .update(User)
       .set({ ...updates })
       .where({ id })
+      .returning('*')
       .execute();
   }
 
