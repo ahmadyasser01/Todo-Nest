@@ -76,7 +76,17 @@ export class UserService {
   async findAll() {
     return this.userRepository.find();
   }
+  // async findById(id: number, { limit, page }: { limit: 10; page: 0 }) {
   async findById(id: number) {
-    return this.userRepository.findOne({ where: { id } });
+    // return this.userRepository.findOne({ where: { id } });
+    return (
+      this.userRepository
+        .createQueryBuilder('user')
+        .leftJoinAndSelect('user.todos', 'todo')
+        .where('user.id = :id', { id })
+        // .take(limit)
+        // .skip((page - 1) * limit)
+        .getOne()
+    );
   }
 }
