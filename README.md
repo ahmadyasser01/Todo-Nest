@@ -5,69 +5,73 @@
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+# Todo Application
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Todo application written in NestJs to manage your Todo Tasks. You can signup and create your tasks. Tasks have 3 status [Todo, ingprogress, done] in which you can manage your work smartly
+
+## Requirements
+
+List of software or hardware requirements that are necessary to run the application. For example:
+
+- Node.js version 14 or later
+- Postgres database
 
 ## Installation
 
+Step-by-step guide on how to install the application. For example:
+
+1. Clone the repository: `git clone https://github.com/ahmadyasser01/Todo-Nest.git`
+2. Configure the environment variables: `cp .env.example .env` and modify the values accordingly.
+3. if you want to run the application using Docker go to Docker section below
+4. Install the dependencies: `npm install`
+5. Start the application: `npm start`
+
+## Configuration
+
+Explanation of how to configure the application. For example:
+
+- The application uses environment variables for configuration. The available variables are listed in the `.env.example` file.
+- You can modify the default configuration by creating a `.env` file and setting the desired values.
+
+## Usage
+
+Explanation of how to use the application. For example:
+- The application is a web server that provides an API for creating Todo tasks
+- You can access the API by sending HTTP requests to the server's endpoint. The available endpoints are documented in the API documentation.
+
+## Docker
+Explanation of how to use the application with Docker
+
+- The application can be run with Docker Compose for easy deployment and scaling.
+- Configure the environment variables: `cp .env.example .env` and modify the values accordingly.
+- To start the application with Docker Compose, run:
 ```bash
-$ npm install
+ $ docker-compose up -d
 ```
 
-## Running the app
+- The application is now running and can be accessed at `http://localhost:3000`.
 
-```bash
-# development
-$ npm run start
+## Contributing
 
-# watch mode
-$ npm run start:dev
+Explanation of how to contribute to the application. For example:
 
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- If you want to contribute to the application, you can submit a pull request with your changes.
+- Before submitting a pull request, make sure to run the tests and follow the code style guidelines.
+- If you encounter a bug or have a feature request, please open an issue in the issue tracker.
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+Explanation of the license under which the application is distributed. For example:
+
+This application is distributed under the MIT license. See `LICENSE.md` for more information.
+
+## Contact
+
+
+
+
+
+
+
+
