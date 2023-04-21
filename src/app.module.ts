@@ -11,7 +11,6 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggingInterceptor } from './logging/logging.interceptor';
 import { SeederService } from './services/seeder/seeder.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import config from './config';
 
 @Module({
   imports: [

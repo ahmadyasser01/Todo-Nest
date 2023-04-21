@@ -19,6 +19,9 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { AuthService } from 'src/auth/services/auth.service';
+import { CACHE_MANAGER } from '@nestjs/cache-manager/dist';
+import { Cache } from 'cache-manager';
+import { User } from './entites/user.entity';
 
 @Controller('users')
 export class UserController {
@@ -26,6 +29,7 @@ export class UserController {
     private userService: UserService,
     @Inject(forwardRef(() => AuthService))
     private authService: AuthService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -41,8 +45,15 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   async getUser(@Request() req) {
-    const user = await this.userService.findById(req.user.userId);
+    const cacheKey = `user:${req.user.userId}`;
+    let user = await this.cacheManager.get(cacheKey);
+    if (user) {
+      return user;
+    }
+    console.log('not found in cache');
+    user = await this.userService.findById(req.user.userId);
     if (!user) return new NotFoundException('User Not found');
+    await this.cacheManager.set(cacheKey, user, 6000000);
 
     return user;
   }
