@@ -10,12 +10,19 @@ import { Todo } from './todo/entities/todo.entity';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggingInterceptor } from './logging/logging.interceptor';
 import { SeederService } from './services/seeder/seeder.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import config from './config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      // load: [config],
+      envFilePath: '../.env',
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.POSTGRES_HOST || 'localhost',
+      host: process.env.POSTGRES_HOST,
       port: +process.env.POSTGRES_PORT || 5432,
       username: process.env.POSTGRES_USER || 'postgres',
       password: process.env.POSTGRES_PASSWORD || '123456789',
@@ -38,10 +45,20 @@ import { SeederService } from './services/seeder/seeder.service';
   ],
 })
 export class AppModule {
-  constructor(private readonly seederService: SeederService) {}
+  constructor(
+    private readonly seederService: SeederService,
+    private readonly configService: ConfigService,
+  ) {
+    console.log(process.env.HOST, 'h');
+  }
 
   async onModuleInit() {
-    console.log('seeding');
-    await this.seederService.seed(10000);
+    // console.log('seeding');
+    // await this.seederService.seed(10000);
+    console.log(
+      this.configService.get<string>('JWT_SECRET'),
+      this.configService.get<string>('POSTGRES_PASSWORD'),
+      process.env.POSTGRES_PASSWORD,
+    );
   }
 }

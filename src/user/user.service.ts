@@ -1,4 +1,9 @@
-import { Inject, Injectable, forwardRef } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  NotFoundException,
+  forwardRef,
+} from '@nestjs/common';
 import { User } from './entites/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -69,5 +74,8 @@ export class UserService {
   }
   async findAll() {
     return this.userRepository.find();
+  }
+  async findById(id: number) {
+    return this.userRepository.findOne({ where: { id } });
   }
 }

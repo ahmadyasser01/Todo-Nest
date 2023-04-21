@@ -11,6 +11,7 @@ import {
   UseInterceptors,
   forwardRef,
   Inject,
+  NotFoundException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
@@ -35,11 +36,14 @@ export class UserController {
     return this.userService.createUser(createUserDto);
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getUser(@Request() req) {
-    console.log('getting user');
-    return req.user;
+  async getUser(@Request() req) {
+    const user = await this.userService.findById(req.user.userId);
+    if (!user) return new NotFoundException('User Not found');
+
+    return user;
   }
 
   @UseGuards(JwtAuthGuard)
