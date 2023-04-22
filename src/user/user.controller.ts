@@ -48,12 +48,13 @@ export class UserController {
     const cacheKey = `user:${req.user.userId}`;
     let user = await this.cacheManager.get(cacheKey);
     if (user) {
+      console.log('found in cache');
       return user;
     }
     console.log('not found in cache');
     user = await this.userService.findById(req.user.userId);
     if (!user) return new NotFoundException('User Not found');
-    await this.cacheManager.set(cacheKey, user, 6000000);
+    await this.cacheManager.set(cacheKey, user);
 
     return user;
   }

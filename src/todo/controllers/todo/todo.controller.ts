@@ -27,7 +27,6 @@ export class TodoController {
   @UseGuards(JwtAuthGuard)
   @Post('')
   createTodo(@Body() createTodoDto: CreateTaskDto, @Request() req: any) {
-    console.log('passed user id', req.user);
     return this.todoService.createTodo(createTodoDto, req.user.userId);
   }
 
@@ -38,8 +37,6 @@ export class TodoController {
     @Query('page') page: number,
     @Query('limit') limit: number,
   ) {
-    console.log('passed user id', req.user);
-    console.log('from conttoler', page, limit);
     return this.todoService.getTodos(req.user.userId, { page, limit });
   }
 

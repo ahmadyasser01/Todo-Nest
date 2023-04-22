@@ -12,7 +12,7 @@ import { CacheModule } from '@nestjs/cache-manager';
     TypeOrmModule.forFeature([User, Todo]),
     forwardRef(() => AuthModule),
     CacheModule.register({
-      ttl: 600000, // seconds
+      ttl: 60000, // in ms
       max: 10, // maximum number of items in cache
     }),
   ],

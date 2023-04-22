@@ -36,7 +36,6 @@ export class UserService {
         password: password,
       });
     }
-    console.log(users[50]);
     return this.userRepository
       .createQueryBuilder()
       .insert()
@@ -45,7 +44,6 @@ export class UserService {
       .execute();
   }
   async findByEmail(email: string): Promise<User | undefined> {
-    console.log('test finding');
     return this.userRepository.findOne({ where: { email } });
   }
   async updateUser(id: number, updates: UpdateUserDto) {

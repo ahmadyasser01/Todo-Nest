@@ -17,14 +17,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     ConfigModule.forRoot({
       isGlobal: true,
       // load: [config],
-      envFilePath: '../.env',
+      envFilePath: './.env',
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.POSTGRES_HOST,
-      port: +process.env.POSTGRES_PORT || 5432,
-      username: process.env.POSTGRES_USER || 'postgres',
-      password: process.env.POSTGRES_PASSWORD || '123456789',
+      port: +process.env.POSTGRES_PORT,
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB || 'tododb',
       entities: [User, Todo],
       synchronize: true,
@@ -47,17 +47,10 @@ export class AppModule {
   constructor(
     private readonly seederService: SeederService,
     private readonly configService: ConfigService,
-  ) {
-    console.log(process.env.HOST, 'h');
-  }
+  ) {}
 
   async onModuleInit() {
     // console.log('seeding');
     // await this.seederService.seed(10000);
-    console.log(
-      this.configService.get<string>('JWT_SECRET'),
-      this.configService.get<string>('POSTGRES_PASSWORD'),
-      process.env.POSTGRES_PASSWORD,
-    );
   }
 }
