@@ -47,7 +47,7 @@ Explanation of how to use the application with Docker
 - Configure the environment variables: `cp .env.example .env` and modify the values accordingly.
 - To start the application with Docker Compose, run:
 ```bash
- $ docker-compose up -d
+ $ docker-compose up --build
 ```
 
 - The application is now running and can be accessed at `http://localhost:3000`.
